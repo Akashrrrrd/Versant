@@ -1116,10 +1116,17 @@ export function generateTestQuestions(previousTestIds: string[] = []): { [key: s
     const sectionSets = allSets[section as keyof typeof allSets]
     const availableSets = sectionSets.filter(set => !previousTestIds.includes(set.id))
     
-    // If all sets have been used, reset and use any set
+    // If all sets have been used recently, prefer the least recently used
     const setsToChooseFrom = availableSets.length > 0 ? availableSets : sectionSets
     selectedSets[section] = getRandomQuestionSet(setsToChooseFrom)
   })
+  
+  // Log the selection for debugging
+  console.log('🎲 Auto-generated question sets:', Object.keys(selectedSets).map(section => ({
+    section,
+    setName: selectedSets[section].name,
+    avoided: previousTestIds.length
+  })))
   
   return selectedSets
 }

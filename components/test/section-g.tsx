@@ -59,15 +59,7 @@ export default function SectionG({ isRecording, onStartRecording, onStopRecordin
     onSaveResponse(currentTopic)
   }
 
-  const handleNewTopic = () => {
-    const newSet = getRandomQuestionSet(SECTION_G_QUESTIONS)
-    setQuestionSet(newSet)
-    setCurrentTopic(0)
-    setPrepTime(30)
-    setTalkTime(45)
-    setPhase("prep")
-    setHasRecorded(false)
-  }
+  // Topics are now automatically selected - no manual regeneration needed
 
   const handleNextTopic = () => {
     if (questionSet && currentTopic < questionSet.questions.length - 1) {
@@ -115,15 +107,6 @@ export default function SectionG({ isRecording, onStartRecording, onStopRecordin
         </div>
         <div className="flex space-x-2">
           <Button
-            onClick={handleNewTopic}
-            variant="outline"
-            size="sm"
-            className="border-blue-300 text-blue-700 hover:bg-blue-50"
-          >
-            <RefreshCw className="w-4 h-4 mr-1" />
-            New Topic Set
-          </Button>
-          <Button
             onClick={() => setUseEnhancedRecording(!useEnhancedRecording)}
             variant="outline"
             size="sm"
@@ -131,6 +114,9 @@ export default function SectionG({ isRecording, onStartRecording, onStopRecordin
           >
             {useEnhancedRecording ? "Enhanced Mode" : "Basic Mode"}
           </Button>
+          <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded font-medium">
+            Auto-Selected Topics
+          </span>
         </div>
       </div>
 

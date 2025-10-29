@@ -169,16 +169,18 @@ export class TestSessionManager {
   }
 
   private getRecentlyUsedQuestionSets(): string[] {
-    // Get question sets used in the last 3 tests to avoid immediate repetition
-    const recentSessions = this.history.sessions.slice(-3)
+    // Get question sets used in the last 5 tests to ensure better variety
+    const recentSessions = this.history.sessions.slice(-5)
     const recentSets: string[] = []
     
     recentSessions.forEach(session => {
-      Object.values(session.questionSets).forEach(setId => {
-        if (!recentSets.includes(setId)) {
-          recentSets.push(setId)
-        }
-      })
+      if (session.questionSets) {
+        Object.values(session.questionSets).forEach(setId => {
+          if (!recentSets.includes(setId)) {
+            recentSets.push(setId)
+          }
+        })
+      }
     })
     
     return recentSets

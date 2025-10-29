@@ -47,12 +47,7 @@ export default function SectionA({ isRecording, onStartRecording, onStopRecordin
     }
   }
 
-  const handleNewQuestionSet = () => {
-    const newSet = getRandomQuestionSet(SECTION_A_QUESTIONS)
-    setQuestionSet(newSet)
-    setCurrentQuestion(0)
-    setRecordedQuestions([])
-  }
+  // Questions are now automatically selected - no manual regeneration needed
 
   const handleEnhancedRecordingComplete = (audioBlob: Blob, transcription: string, metrics: any) => {
     // Handle the enhanced recording completion
@@ -91,15 +86,6 @@ export default function SectionA({ isRecording, onStartRecording, onStopRecordin
         </div>
         <div className="flex space-x-2">
           <Button
-            onClick={handleNewQuestionSet}
-            variant="outline"
-            size="sm"
-            className="border-blue-300 text-blue-700 hover:bg-blue-50"
-          >
-            <RefreshCw className="w-4 h-4 mr-1" />
-            New Questions
-          </Button>
-          <Button
             onClick={() => setUseEnhancedRecording(!useEnhancedRecording)}
             variant="outline"
             size="sm"
@@ -107,6 +93,9 @@ export default function SectionA({ isRecording, onStartRecording, onStopRecordin
           >
             {useEnhancedRecording ? "Enhanced Mode" : "Basic Mode"}
           </Button>
+          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+            Auto-Selected Questions
+          </span>
         </div>
       </div>
 

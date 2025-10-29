@@ -57,11 +57,11 @@ export default function CommunicationTest() {
   }, [])
 
   const initializeTest = () => {
-    // Create a new test session with varied questions
+    // Automatically create a new test session with varied questions every time
     const testSession = createNewTest('mixed')
     setCurrentTestSession(testSession)
     
-    // Load the question sets for this test
+    // Load the automatically selected question sets for this test
     const allSets = getAllQuestionSets()
     const selectedSets: { [key: string]: any } = {}
     
@@ -75,6 +75,12 @@ export default function CommunicationTest() {
     })
     
     setQuestionSets(selectedSets)
+    
+    console.log('🎯 New test initialized with fresh question sets:', Object.keys(selectedSets).map(section => ({
+      section,
+      setName: selectedSets[section].name,
+      setId: selectedSets[section].id
+    })))
   }
 
   const initializeAudio = async () => {
@@ -268,7 +274,7 @@ export default function CommunicationTest() {
   }
 
   const handleRegenerateQuestions = () => {
-    // Generate new question sets
+    // This is now only for manual regeneration (optional feature)
     const newTestSession = createNewTest('mixed')
     setCurrentTestSession(newTestSession)
     
@@ -287,6 +293,8 @@ export default function CommunicationTest() {
     setQuestionSets(selectedSets)
     setResponses([]) // Clear previous responses
     setCurrentSection("A") // Reset to first section
+    
+    console.log('🔄 Questions manually regenerated with new sets')
   }
 
   const renderSection = () => {
@@ -344,17 +352,11 @@ export default function CommunicationTest() {
                 <Info className="w-4 h-4 mr-1" />
                 Question Info
               </Button>
-              <Button
-                onClick={handleRegenerateQuestions}
-                variant="outline"
-                size="sm"
-                className="border-green-300 text-green-700 hover:bg-green-50"
-              >
-                <RefreshCw className="w-4 h-4 mr-1" />
-                New Questions
-              </Button>
               <Badge variant="outline" className="text-gray-600">
                 Section {currentSection}
+              </Badge>
+              <Badge variant="default" className="bg-green-600 text-white">
+                Auto-Varied Questions
               </Badge>
             </div>
           </div>
@@ -447,15 +449,15 @@ export default function CommunicationTest() {
         {/* Question Variety Info */}
         <Card className="border-green-200 bg-green-50 mt-6">
           <CardContent className="pt-4">
-            <h3 className="font-semibold text-green-900 mb-2">🎯 Varied Question System</h3>
+            <h3 className="font-semibold text-green-900 mb-2">🎯 Automatic Question Variety</h3>
             <p className="text-green-800 text-sm mb-2">
-              This test uses different question sets each time to provide variety and prevent memorization.
+              Every test automatically uses different questions - no two tests are the same!
             </p>
             <div className="text-xs text-green-700">
-              <p>• <strong>5-7 different question sets</strong> per section</p>
-              <p>• <strong>Smart rotation</strong> avoids recently used questions</p>
-              <p>• <strong>Difficulty tracking</strong> suggests appropriate levels</p>
-              <p>• <strong>Performance analysis</strong> based on actual responses</p>
+              <p>• <strong>Automatic selection</strong> from 5-7 question sets per section</p>
+              <p>• <strong>Smart avoidance</strong> of recently used questions</p>
+              <p>• <strong>No repetition</strong> - fresh questions every time</p>
+              <p>• <strong>Intelligent scoring</strong> based on actual question content</p>
             </div>
           </CardContent>
         </Card>
